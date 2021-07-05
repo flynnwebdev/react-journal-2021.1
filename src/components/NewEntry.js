@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { useHistory, useParams } from "react-router-dom"
+import { stateContext } from "../stateReducer"
 
 const NewEntry = (props) => {
     const [errorMessage, setErrorMessage] = useState()
     const [entry, setEntry] = useState("")
     const { category_id } = useParams()
-    const category = props.categories[category_id]
+    const { categories, dispatch } = useContext(stateContext)
+    const category = categories[category_id]
     const history = useHistory()
 
     useEffect(() => {
@@ -14,7 +16,11 @@ const NewEntry = (props) => {
 
     const submit = (event) => {
         event.preventDefault()
-        props.addEntry(category_id, entry)
+        dispatch({
+            type: "addEntry",
+            category: category_id,
+            text: entry
+        })
         history.push("/")
     }
 
@@ -24,7 +30,7 @@ const NewEntry = (props) => {
                 <h4 style={{ color: "red" }}>{errorMessage}</h4>
             ) : (
                 <>
-                    <h1>New Entry in Category: {props.categories[category_id]}</h1>
+                    <h1>New Entry in Category: {categories[category_id]}</h1>
                     <form onSubmit={submit}>
                         <div>
                             <textarea onChange={(e) => setEntry(e.target.value)} value={entry} />

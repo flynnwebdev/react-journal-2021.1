@@ -1,4 +1,9 @@
-const Home = ({ categories, entries }) => {
+import { useContext } from "react"
+import { stateContext } from "../stateReducer"
+
+const Home = () => {
+    const { entries, categories } = useContext(stateContext)
+    
     return (
         <div>
             <h1>Home</h1>
