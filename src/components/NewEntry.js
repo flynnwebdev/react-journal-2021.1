@@ -7,7 +7,7 @@ const NewEntry = (props) => {
     const [entry, setEntry] = useState("")
     const { category_id } = useParams()
     const { categories, dispatch } = useContext(stateContext)
-    const category = categories[category_id]
+    const category = categories.find(cat => cat.id == category_id)
     const history = useHistory()
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const NewEntry = (props) => {
                 <h4 style={{ color: "red" }}>{errorMessage}</h4>
             ) : (
                 <>
-                    <h1>New Entry in Category: {categories[category_id]}</h1>
+                    <h1>New Entry in Category: {category.name}</h1>
                     <form onSubmit={submit}>
                         <div>
                             <textarea onChange={(e) => setEntry(e.target.value)} value={entry} />

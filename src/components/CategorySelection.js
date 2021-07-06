@@ -9,9 +9,9 @@ const CategorySelection = (props) => {
         <div>
             <h1>Category Selection</h1>
             <ul>
-                {categories.map((cat, index) => (
-                    <li key={index}>
-                        <Link to={`/entry/new/${index}`}>{cat}</Link>
+                {categories.map(cat => (
+                    <li key={cat.id}>
+                        <Link to={`/entry/new/${cat.id}`}>{cat.name}</Link>
                     </li>
                 ))}
             </ul>
