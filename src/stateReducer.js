@@ -22,6 +22,14 @@ export default function stateReducer (currentState, action) {
                 entries: action.entries
             }
         }
+
+        case "setToken": {
+            localStorage.setItem("token", action.data.token)
+            return {
+                ...currentState,
+                token: action.data.token
+            }            
+        }
         
         default:
             return currentState
