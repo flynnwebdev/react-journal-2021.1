@@ -1,30 +1,38 @@
-import React, { useEffect, useReducer } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import React, { useEffect, useReducer } from "react"
+import { BrowserRouter, Route, Switch } from "react-router-dom"
 import Home from "./components/Home"
-import CategorySelection from './components/CategorySelection'
-import NewEntry from './components/NewEntry'
-import NotFound from './components/NotFound'
-import Nav from './components/Nav'
-import stateReducer, { stateContext } from './stateReducer'
+import CategorySelection from "./components/CategorySelection"
+import NewEntry from "./components/NewEntry"
+import NotFound from "./components/NotFound"
+import Nav from "./components/Nav"
+import stateReducer, { stateContext } from "./stateReducer"
 
 function App() {
   const [store, dispatch] = useReducer(stateReducer, {
     categories: [],
-    entries: []
+    entries: [],
   })
 
   useEffect(async () => {
     const res = await fetch("http://localhost:4000/api/v1/categories")
     const data = await res.json()
-    console.log(data)
     dispatch({
       type: "setCategories",
-      categories: data
+      categories: data,
+    })
+  }, [])
+
+  useEffect(async () => {
+    const res = await fetch("http://localhost:4000/api/v1/entries")
+    const data = await res.json()
+    dispatch({
+      type: "setEntries",
+      entries: data,
     })
   }, [])
 
   return (
-    <stateContext.Provider value={{...store, dispatch}}>
+    <stateContext.Provider value={{ ...store, dispatch }}>
       <h1>Journal</h1>
       <BrowserRouter>
         <Nav />

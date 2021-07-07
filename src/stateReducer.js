@@ -5,7 +5,7 @@ export default function stateReducer (currentState, action) {
         case "addEntry": {
             return {
                 ...currentState,
-                entries: [...currentState.entries, { category: action.category, text: action.text }]
+                entries: [...currentState.entries, action.newEntry]
             }
         }
 
@@ -13,6 +13,13 @@ export default function stateReducer (currentState, action) {
             return {
                 ...currentState,
                 categories: action.categories
+            }
+        }
+        
+        case "setEntries": {
+            return {
+                ...currentState,
+                entries: action.entries
             }
         }
         

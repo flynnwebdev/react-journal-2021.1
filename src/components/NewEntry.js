@@ -14,12 +14,21 @@ const NewEntry = (props) => {
         category ? setErrorMessage(null) : setErrorMessage("Invalid category")
     }, [category_id, category])
 
-    const submit = (event) => {
+    const submit = async (event) => {
         event.preventDefault()
+        const newEntry = { category_id: category_id, content: entry }
+        const res = await fetch("http://localhost:4000/api/v1/entries", {
+                    method: "POST",
+                    body: JSON.stringify(newEntry),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+        const data = await res.json()
+        console.log(data)
         dispatch({
             type: "addEntry",
-            category: category_id,
-            text: entry
+            newEntry
         })
         history.push("/")
     }
