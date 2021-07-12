@@ -17,7 +17,11 @@ function App() {
 
   useEffect(async () => {
     if (!store.token) return
-    const res = await fetch("http://localhost:4000/api/v1/categories")
+    const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}categories`, {
+      headers: {
+        "Authorization": `Bearer ${store.token}`
+      }
+    });
     const data = await res.json()
     if (res.status === 200) {
       dispatch({
@@ -25,7 +29,7 @@ function App() {
         categories: data,
       })
     } else {
-      localStorage.setItem("token")
+      localStorage.setItem("token", null)
       dispatch({
         type: "setToken",
         data: { token: null },
@@ -35,7 +39,11 @@ function App() {
 
   useEffect(async () => {
     if (!store.token) return
-    const res = await fetch("http://localhost:4000/api/v1/entries")
+    const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}entries`, {
+      headers: {
+        "Authorization": `Bearer ${store.token}`,
+      },
+    });
     const data = await res.json()
     dispatch({
       type: "setEntries",

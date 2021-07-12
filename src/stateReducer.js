@@ -5,7 +5,7 @@ export default function stateReducer (currentState, action) {
         case "addEntry": {
             return {
                 ...currentState,
-                entries: [...currentState.entries, action.newEntry]
+                entries: [action.data, ...currentState.entries]
             }
         }
 
